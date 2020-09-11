@@ -65,17 +65,16 @@ class Cliente {
         $nome = $row['nome'];
         $email = $row['email'];
         $fone = $row['fone'];
-        
-        $return_arr[] = array(
-          
+      }  
+      
+      $this->setResponse(
+        array(
           "id" => $id,
           "nome" => $nome,
           "fone" => $fone,
-          "email" => $email);
-          
-      }  
-      
-      $this->setResponse($return_arr);
+          "email" => $email
+        )
+      );
       
     }else{
       

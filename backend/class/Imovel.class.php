@@ -21,7 +21,10 @@ class Imovel {
   function list(){
     $return_arr = array();
     
-    $query = "SELECT * FROM imoveis";
+    $query = 
+    "SELECT imoveis.*, proprietarios.nome as proprietario_nome
+         FROM imoveis
+        INNER JOIN proprietarios ON imoveis.proprietario_id = proprietarios.id";
     $result = mysqli_query($this->con, $query);
     
     if($result){
@@ -31,12 +34,14 @@ class Imovel {
         $id = $row['id'];
         $endereco = $row['endereco'];
         $proprietario_id = $row['proprietario_id'];
+        $proprietario_nome = $row['proprietario_nome'];
         
         $return_arr[] = array(
           
           "id" => $id,
           "endereco" => $endereco,
-          "proprietario_id" => $proprietario_id);
+          "proprietario_id" => $proprietario_id,
+          "proprietario_nome" => $proprietario_nome);
           
       }  
       
@@ -61,16 +66,14 @@ class Imovel {
         $id = $row['id'];
         $endereco = $row['endereco'];
         $proprietario_id = $row['proprietario_id'];
-        
-        $return_arr[] = array(
-          "id" => $id,
-          "endereco" => $endereco,
-          "proprietario_id" => $proprietario_id
-        );
           
       }  
       
-      $this->setResponse($return_arr);
+      $this->setResponse(array(
+        "id" => $id,
+        "endereco" => $endereco,
+        "proprietario_id" => $proprietario_id
+      ));
       
     }else{
       

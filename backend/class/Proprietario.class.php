@@ -57,7 +57,7 @@ class Proprietario {
   function find($id){
     $return_arr = array();
     
-    $query = "SELECT * FROM clientes WHERE id = {$id}";
+    $query = "SELECT * FROM proprietarios WHERE id = {$id}";
     $result = mysqli_query($this->con, $query);
     
     if($result){
@@ -68,17 +68,19 @@ class Proprietario {
         $nome = $row['nome'];
         $email = $row['email'];
         $fone = $row['fone'];
-        
-        $return_arr[] = array(
-          
+        $dia_repasse = $row['dia_repasse'];
+         
+      }  
+      
+      $this->setResponse(
+        array(
           "id" => $id,
           "nome" => $nome,
           "fone" => $fone,
-          "email" => $email);
-          
-      }  
-      
-      $this->setResponse($return_arr);
+          "email" => $email,
+          "dia_repasse" => $dia_repasse
+        )
+      );
       
     }else{
       
@@ -90,6 +92,7 @@ class Proprietario {
     
     $query = "INSERT INTO proprietarios (nome, email, fone, dia_repasse) VALUES ('{$data->nome}', '{$data->email}', '{$data->fone}', '{$data->dia_repasse}')";
 
+    $this->setError($query);
     $result = mysqli_query($this->con, $query);
     
     if($result){
